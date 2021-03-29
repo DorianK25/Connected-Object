@@ -25,13 +25,11 @@ typedef struct
     int isAdmin;//boolean
     int idNFC;
     groupe groupe;
-
 }personne;
 
 typedef struct 
 {
     personne personne;
-
 }presence;
 
 typedef struct 
@@ -39,7 +37,6 @@ typedef struct
     char* nom;
     groupe groupe;
     presence listePresence[];
-
 }seance;
 
 typedef struct 
@@ -54,7 +51,6 @@ typedef struct
     personne demandeur;
     personne repondeur;
     reponse bonneReponse;
-
 }question;
 
 question getQuestion();
@@ -73,4 +69,3 @@ classe getClasse();
 void postClasse(classe c);
 cours getCours();
 void postCours(cours c);
-
