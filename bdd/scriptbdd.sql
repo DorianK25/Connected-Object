@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:8889
--- Généré le :  lun. 29 mars 2021 à 19:51
+-- Généré le :  mar. 30 mars 2021 à 14:18
 -- Version du serveur :  5.7.26
 -- Version de PHP :  7.4.2
 
@@ -24,6 +24,15 @@ CREATE TABLE `classe` (
   `idClasse` int(11) NOT NULL,
   `nomClasse` char(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `classe`
+--
+
+INSERT INTO `classe` (`idClasse`, `nomClasse`) VALUES
+(2, 'LA1'),
+(3, 'LA2'),
+(1, 'prof');
 
 -- --------------------------------------------------------
 
@@ -48,6 +57,13 @@ CREATE TABLE `groupe` (
   `idClasse` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Déchargement des données de la table `groupe`
+--
+
+INSERT INTO `groupe` (`idGroupe`, `nomGroupe`, `idClasse`) VALUES
+(1, 'TDB', 3);
+
 -- --------------------------------------------------------
 
 --
@@ -62,6 +78,13 @@ CREATE TABLE `personne` (
   `idNFC` int(11) NOT NULL,
   `idGroupe` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `personne`
+--
+
+INSERT INTO `personne` (`idPersonne`, `nomPersonne`, `prenomPersonne`, `isAdmin`, `idNFC`, `idGroupe`) VALUES
+(2, 'Branlant', 'Theodorine', 0, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -121,19 +144,22 @@ CREATE TABLE `seance` (
 -- Index pour la table `classe`
 --
 ALTER TABLE `classe`
-  ADD PRIMARY KEY (`idClasse`);
+  ADD PRIMARY KEY (`idClasse`),
+  ADD UNIQUE KEY `nomClasse` (`nomClasse`);
 
 --
 -- Index pour la table `cours`
 --
 ALTER TABLE `cours`
-  ADD PRIMARY KEY (`idCours`);
+  ADD PRIMARY KEY (`idCours`),
+  ADD UNIQUE KEY `nomCours` (`nomCours`);
 
 --
 -- Index pour la table `groupe`
 --
 ALTER TABLE `groupe`
-  ADD PRIMARY KEY (`idGroupe`);
+  ADD PRIMARY KEY (`idGroupe`),
+  ADD UNIQUE KEY `nomGroupe` (`nomGroupe`);
 
 --
 -- Index pour la table `personne`
@@ -158,3 +184,61 @@ ALTER TABLE `question`
 --
 ALTER TABLE `reponse`
   ADD PRIMARY KEY (`idReponse`);
+
+--
+-- Index pour la table `seance`
+--
+ALTER TABLE `seance`
+  ADD PRIMARY KEY (`idSeance`);
+
+--
+-- AUTO_INCREMENT pour les tables déchargées
+--
+
+--
+-- AUTO_INCREMENT pour la table `classe`
+--
+ALTER TABLE `classe`
+  MODIFY `idClasse` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
+--
+-- AUTO_INCREMENT pour la table `cours`
+--
+ALTER TABLE `cours`
+  MODIFY `idCours` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `groupe`
+--
+ALTER TABLE `groupe`
+  MODIFY `idGroupe` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT pour la table `personne`
+--
+ALTER TABLE `personne`
+  MODIFY `idPersonne` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT pour la table `presence`
+--
+ALTER TABLE `presence`
+  MODIFY `idPresence` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `question`
+--
+ALTER TABLE `question`
+  MODIFY `idQuestion` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `reponse`
+--
+ALTER TABLE `reponse`
+  MODIFY `idReponse` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `seance`
+--
+ALTER TABLE `seance`
+  MODIFY `idSeance` int(11) NOT NULL AUTO_INCREMENT;

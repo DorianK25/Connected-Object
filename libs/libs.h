@@ -5,22 +5,26 @@
 
 typedef struct 
 {
+    int idCours;
     char* nom;
 }cours;
 
 typedef struct 
 {
+    int idClasse;
     char* nom;
 }classe;
 
 typedef struct 
 {
+    int idGroupe;
     char* nom;
     classe classe;
 }groupe;
 
 typedef struct 
 {
+    int idPersonne;
     char* nom;
     char* prenom;
     int isAdmin;//boolean
@@ -30,11 +34,13 @@ typedef struct
 
 typedef struct 
 {
+    int idPresence;
     personne personne;
 }presence;
 
 typedef struct 
 {
+    int idSeance;
     char* nom;
     groupe groupe;
     presence listePresence[];
@@ -42,11 +48,13 @@ typedef struct
 
 typedef struct 
 {
+    int idReponse;
     char* intitule;
 }reponse;
 
 typedef struct 
 {
+    int idQuestion;
     char* intitule;
     reponse reponse[4];
     personne demandeur;
@@ -54,9 +62,13 @@ typedef struct
     reponse bonneReponse;
 }question;
 
-
+void reverse(char s[]);
+void itoa(int n, char s[]);
 void afficherClasse();
-void ajouterClasse();
+void ajouterClasse(classe);
+void afficherGroupe(classe);
+void ajouterGroupe(groupe);
+void ajouterPersonne(personne);
 question getQuestion();
 void postQuestion(question);
 reponse getReponse();
