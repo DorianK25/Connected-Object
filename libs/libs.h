@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "../bdd/bdd.h"
 
 typedef struct 
 {
@@ -53,6 +54,9 @@ typedef struct
     reponse bonneReponse;
 }question;
 
+
+void afficherClasse();
+void ajouterClasse();
 question getQuestion();
 void postQuestion(question);
 reponse getReponse();
