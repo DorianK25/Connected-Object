@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 typedef struct 
 {
@@ -36,7 +37,8 @@ typedef struct
 
 typedef struct 
 {
-    char* nom;
+    cours cours;
+    time_t date;
     groupe groupe;
     presence listePresence[];
 
