@@ -24,7 +24,7 @@ typedef struct
     char* nom;
     char* prenom;
     int isAdmin;//boolean
-    int idNFC;
+    char* idNFC;
     groupe groupe;
 
 }personne;
