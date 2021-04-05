@@ -13,8 +13,8 @@ void connection(){
 
 }
 
-void execQuery(char * query){
-    mysql_query(&mysql, query);
+int execQuery(char *query){
+   return mysql_query(&mysql, query);
 }
 
 

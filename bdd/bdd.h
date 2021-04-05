@@ -7,9 +7,10 @@ MYSQL mysql;
 MYSQL_RES *result;
 MYSQL_ROW row;
 MYSQL_FIELD *field;
+int state;
 
 void connection();
 
-void execQuery(char *);
+int execQuery(char *);
 
 void deconnection();
