@@ -80,7 +80,7 @@ seance getSeance();
 void postSeance(seance);
 presence getPresence();
 void postPresence(presence);
-personne getPersonne(int,groupe);
+personne getPersonne(char *,groupe);
 void postPersonne(personne);
 groupe getGroupe(classe,char *);
 void postGroupe(groupe);

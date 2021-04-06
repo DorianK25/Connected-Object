@@ -122,17 +122,16 @@ groupe getGroupe(classe c,char* nom){
     return g;
 }
 
-personne getPersonne(int idNFC,groupe g){
+personne getPersonne(char * idNFC,groupe g){
     personne p;
     p.groupe=g;
     p.idNFC=idNFC;
-    char query[250]="SELECT EXISTS(SELECT * from personne WHERE idNFC=";
+    char query[250]="SELECT EXISTS(SELECT * from personne WHERE idNFC='";
     char id[20];
     char idG[20];
-    itoa(idNFC,id);
     itoa(g.idGroupe,idG);
-    strcat(query,id);
-    strcat(query," AND idGroupe=");
+    strcat(query,p.idNFC);
+    strcat(query,"' AND idGroupe=");
     strcat(query,idG);
     strcat(query,")");
     execQuery(query);
@@ -227,8 +226,6 @@ void ajouterPersonne(personne p){
     itoa(p.groupe.idGroupe,idgroupe);
     char idAdmin[20];
     itoa(p.isAdmin,idAdmin);
-    char idNFC[20];
-    itoa(p.idNFC,idNFC);
     char query[1024]="";
     strcat(query,"INSERT INTO `personne` (`idPersonne`, `nomPersonne`, `prenomPersonne`, `isAdmin`, `idNFC`, `idGroupe`) VALUES(NULL,'");
     strcat(query,p.nom);
@@ -237,7 +234,7 @@ void ajouterPersonne(personne p){
     strcat(query,"',");
     strcat(query,idAdmin);
     strcat(query,",");
-    strcat(query,idNFC);
+    strcat(query,p.idNFC);
     strcat(query,",");
     strcat(query,idgroupe);
     strcat(query,")");
@@ -252,7 +249,7 @@ int main(){
     groupe g;
     g=getGroupe(c,"TDB");
     personne p;
-    p=getPersonne(1,g);
+    p=getPersonne("1",g);
    /* ajouterClasse(c);
     
     ajouterGroupe(g);
