@@ -1,5 +1,8 @@
-test: libs/libs.c bdd.o
-	gcc libs/libs.c -o libtest.exe bdd.o $(mysql_config --libs) $(mysql_config --cflags)
+test: bdd.o client server
 	rm bdd.o
-bdd.o: bdd/bdd.c
-	gcc -c bdd/bdd.c $(mysql_config --libs) $(mysql_config --cflags)
+client: client.c
+	gcc client.c -o client
+server: server.c
+	gcc server.c -o server
+clean:
+	rm client server

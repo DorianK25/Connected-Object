@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/socket.h>
+#include <arpa/inet.h>
+#include <unistd.h>
+#define PORT 8080
 #include "../bdd/bdd.h"
 
 typedef struct 
@@ -61,6 +65,7 @@ typedef struct
     personne repondeur;
     reponse bonneReponse;
 }question;
+
 
 void reverse(char s[]);
 void itoa(int n, char s[]);

@@ -244,6 +244,9 @@ void ajouterPersonne(personne p){
     execQuery(query);
 }
 
+
+
+
 int main(){
     connection();
    // afficherClasse();
