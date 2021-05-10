@@ -264,19 +264,19 @@ void loadData(data data){
 
 
 
-int main(){
-    connection();
-   // afficherClasse();
-    classe c;
-    c=getClasse("LA2");
-    groupe g;
-    g=getGroupe(c,"TDB");
-    personne p;
-    p=getPersonne(1,g);
-   /* ajouterClasse(c);
+// int main(){
+//     connection();
+//    // afficherClasse();
+//     classe c;
+//     c=getClasse("LA2");
+//     groupe g;
+//     g=getGroupe(c,"TDB");
+//     personne p;
+//     p=getPersonne(1,g);
+//    /* ajouterClasse(c);
     
-    ajouterGroupe(g);
-    afficherGroupe(c);
-    ajouterPersonne(p);*/
-    printf("%s %s",p.nom,p.prenom);
-}
+//     ajouterGroupe(g);
+//     afficherGroupe(c);
+//     ajouterPersonne(p);*/
+//     printf("%s %s",p.nom,p.prenom);
+// }
