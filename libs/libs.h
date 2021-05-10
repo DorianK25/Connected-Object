@@ -66,6 +66,14 @@ typedef struct
     reponse bonneReponse;
 }question;
 
+typedef struct
+{
+    int typeData;
+    question question;
+    reponse reponse;
+    personne personne;
+}data;
+
 
 void reverse(char s[]);
 void itoa(int n, char s[]);
@@ -87,6 +95,7 @@ void postPersonne(personne);
 groupe getGroupe(classe,char *);
 void postGroupe(groupe);
 classe getClasse(char *);
-void postClasse(classe c);
+void postClasse(classe);
 cours getCours();
-void postCours(cours c);
+void postCours(cours);
+void loadData(data);

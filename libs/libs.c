@@ -244,6 +244,23 @@ void ajouterPersonne(personne p){
     execQuery(query);
 }
 
+void loadData(data data){
+    switch (data.typeData)
+    {
+        // emargement 
+    case 1:
+        printf("Bonjour %s %s",data.personne.nom, data.personne.prenom);
+        break;
+
+   /* case "":
+        break;*/
+    
+    default:
+        break;
+    }
+}
+
+
 
 
 

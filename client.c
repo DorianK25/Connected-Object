@@ -4,6 +4,7 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <string.h>
+#include "libs/libs.h"
 #define PORT 8080
 
 int main(int argc, char const *argv[])
@@ -12,6 +13,8 @@ int main(int argc, char const *argv[])
 	struct sockaddr_in serv_addr;
 	char *hello = "Hello from client";
 	char buffer[1024] = {0};
+	data d;
+	//c.idCours =23;
 	if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
 	{
 		printf("\n Socket creation error \n");
@@ -35,9 +38,14 @@ int main(int argc, char const *argv[])
 		printf("\nConnection Failed \n");
 		return -1;
 	}
-	send(sock , hello , strlen(hello) , 0 );
-	printf("Hello message sent\n");
-	valread = read( sock , buffer, 1024);
-	printf("%s\n",buffer );
+	classe c = getClasse("LA2");
+	groupe g = getGroupe(c,"TDB");
+	personne p = getPersonne(1,g);
+	d.typeData = 1;
+	d.personne = p;
+	send(sock, (void *)&d, sizeof(d), 0 );
+/*	printf("Hello message sent\n");
+	valread = read(sock, buffer, 1024);
+	printf("%s\n", buffer );*/
 	return 0;
 }
