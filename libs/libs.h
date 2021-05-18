@@ -32,7 +32,7 @@ typedef struct
     char* nom;
     char* prenom;
     int isAdmin;//boolean
-    int idNFC;
+    char* idNFC;
     groupe groupe;
 }personne;
 
@@ -44,6 +44,8 @@ typedef struct
 
 typedef struct 
 {
+    cours cours;
+    time_t date;
     int idSeance;
     char* nom;
     groupe groupe;
@@ -90,7 +92,7 @@ seance getSeance();
 void postSeance(seance);
 presence getPresence();
 void postPresence(presence);
-personne getPersonne(int,groupe);
+personne getPersonne(char *,groupe);
 void postPersonne(personne);
 groupe getGroupe(classe,char *);
 void postGroupe(groupe);
