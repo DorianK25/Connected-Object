@@ -139,13 +139,12 @@ personne getPersonne(char * idNFC,groupe g){
     int num_fields = mysql_num_fields(result);
     row = mysql_fetch_row(result);
     if(atoi(row[0])>0){
-        strcpy(query,"SELECT * from personne WHERE idNFC=");
-        strcat(query,id);
-        strcat(query," AND idGroupe=");
+        strcpy(query,"SELECT * from personne WHERE idNFC='");
+        strcat(query,p.idNFC);
+        strcat(query,"' AND idGroupe=");
         strcat(query,idG);
         execQuery(query);
         result = mysql_store_result(&mysql);
-        int num_fields = mysql_num_fields(result);
         row = mysql_fetch_row(result);
         p.idPersonne=atoi(row[0]);
         p.nom=row[1];
@@ -241,21 +240,7 @@ void ajouterPersonne(personne p){
     execQuery(query);
 }
 
-void loadData(data data){
-    switch (data.typeData)
-    {
-        // emargement 
-    case 1:
-        printf("Bonjour %s %s",data.personne.nom, data.personne.prenom);
-        break;
 
-   /* case "":
-        break;*/
-    
-    default:
-        break;
-    }
-}
 
 
 
