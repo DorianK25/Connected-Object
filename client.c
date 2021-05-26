@@ -7,13 +7,15 @@
 #include "libs/libs.h"
 #define PORT 8080
 
+
+
 int main(int argc, char const *argv[])
 {
 	int sock = 0, valread;
 	struct sockaddr_in serv_addr;
-	char *hello = "Hello from client";
+	char *hello;
 	char buffer[1024] = {0};
-	data d;
+	char * d="AFC432";
 	//c.idCours =23;
 	if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
 	{
@@ -31,21 +33,14 @@ int main(int argc, char const *argv[])
 		return -1;
 	}
 
-    printf("%d",serv_addr.sin_port);
-
 	if (connect(sock, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0)
 	{
 		printf("\nConnection Failed \n");
 		return -1;
 	}
-	classe c = getClasse("LA2");
-	groupe g = getGroupe(c,"TDB");
-	personne p = getPersonne(1,g);
-	d.typeData = 1;
-	d.personne = p;
-	send(sock, (void *)&d, sizeof(d), 0 );
-/*	printf("Hello message sent\n");
-	valread = read(sock, buffer, 1024);
-	printf("%s\n", buffer );*/
+
+	write(sock, d, sizeof(d));
+	read(sock,buffer,1024);
+	printf("%s",buffer);
 	return 0;
 }
