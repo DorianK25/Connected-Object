@@ -122,18 +122,14 @@ groupe getGroupe(classe c,char* nom){
     return g;
 }
 
-personne getPersonne(char * idNFC,groupe g){
+personne getPersonne(char * idNFC){
     personne p;
-    p.groupe=g;
     p.idNFC=idNFC;
     char query[250]="SELECT EXISTS(SELECT * from personne WHERE idNFC='";
     char id[20];
     char idG[20];
-    itoa(g.idGroupe,idG);
     strcat(query,p.idNFC);
-    strcat(query,"' AND idGroupe=");
-    strcat(query,idG);
-    strcat(query,")");
+    strcat(query,"')");
     execQuery(query);
     result = mysql_store_result(&mysql);
     int num_fields = mysql_num_fields(result);
@@ -141,8 +137,7 @@ personne getPersonne(char * idNFC,groupe g){
     if(atoi(row[0])>0){
         strcpy(query,"SELECT * from personne WHERE idNFC='");
         strcat(query,p.idNFC);
-        strcat(query,"' AND idGroupe=");
-        strcat(query,idG);
+        strcat(query,"'");
         execQuery(query);
         result = mysql_store_result(&mysql);
         row = mysql_fetch_row(result);
@@ -150,6 +145,7 @@ personne getPersonne(char * idNFC,groupe g){
         p.nom=row[1];
         p.prenom=row[2];
         p.isAdmin=atoi(row[3]);
+        //p.groupe=getGroupeById()
     }else{
         p.idPersonne=-1;
         p.nom="Undefined";
@@ -240,6 +236,94 @@ void ajouterPersonne(personne p){
     execQuery(query);
 }
 
+
+
+data deserialize(char *obj){
+    
+   char **champ;
+    int i=0;
+
+    char * strToken =strtok(obj,";");
+    champ = malloc(sizeof(char*) * 10);
+    while ( strToken != NULL ) {
+        champ[i]=strToken;
+        // On demande le token suivant.
+        strToken = strtok ( NULL, ";" );
+        i++;
+    }
+
+    data d;
+    d.typeData=atoi(champ[0]);
+
+
+    switch (d.typeData)
+    {
+        // get personne by id
+    case 1:
+            if(i==2){
+                d.personne = getPersonne(champ[1]);
+            }
+        break;
+        //get personne
+   case 2:
+            if(i==6){
+                d.personne.idNFC = champ[1];
+                d.personne.idPersonne = atoi(champ[2]);
+                d.personne.isAdmin = atoi(champ[3]);
+                d.personne.nom = champ[4];
+                d.personne.prenom = champ[5];
+                //d.personne.groupe = getGroupeById(champ[6]);
+            }
+        break;
+    
+    default:
+        break;
+    }
+    
+    return d;
+
+}
+
+char *serialize(data d){
+    
+    char* champ;
+    champ = malloc(sizeof(char)*2048);
+    itoa(d.typeData,champ);
+    switch (d.typeData)
+    {
+        // get personne by id
+    case 1:
+        strcat(champ,";");
+        strcat(champ,d.personne.idNFC);
+        break;
+        //get personne
+   case 2:
+        strcat(champ,";");
+        strcat(champ,d.personne.idNFC);
+        strcat(champ,";");
+        char * idP;
+        itoa(d.personne.idPersonne,idP);
+        strcat(champ,idP);
+        strcat(champ,";");
+        char isAdmin[2];
+        itoa(d.personne.isAdmin,isAdmin);
+        strcat(champ,isAdmin);
+        strcat(champ,";");
+        strcat(champ,d.personne.nom);
+        strcat(champ,";");
+        strcat(champ,d.personne.prenom);
+        // strcat(champ,";");
+        // char * idG;
+        // itoa(d.personne.groupe.idGroupe,idG);
+        // strcat(champ,idG);
+        break;
+    
+    default:
+        break;
+    }
+
+    return champ;
+}
 
 
 

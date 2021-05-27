@@ -13,9 +13,9 @@ int main(int argc, char const *argv[])
 {
 	int sock = 0, valread;
 	struct sockaddr_in serv_addr;
-	char *hello;
+	char *obj="cc";
 	char buffer[1024] = {0};
-	char * d="AFC432";
+	data d;
 	//c.idCours =23;
 	if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
 	{
@@ -38,9 +38,12 @@ int main(int argc, char const *argv[])
 		printf("\nConnection Failed \n");
 		return -1;
 	}
-
-	write(sock, d, sizeof(d));
-	read(sock,buffer,1024);
-	printf("%s",buffer);
+	d.typeData=1;
+	d.personne.idNFC="AFC432";
+	obj=serialize(d);
+	write(sock, obj, 2048*sizeof(char));
+	read(sock,buffer,2048*sizeof(char));
+	d=deserialize(buffer);
+	printf("Bonjour %s %s \n",d.personne.prenom,d.personne.nom);
 	return 0;
 }

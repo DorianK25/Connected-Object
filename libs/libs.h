@@ -76,7 +76,8 @@ typedef struct
     personne personne;
 }data;
 
-
+data deserialize(char *);
+char *serialize(data);
 void reverse(char s[]);
 void itoa(int n, char s[]);
 void afficherClasse();
@@ -92,7 +93,7 @@ seance getSeance();
 void postSeance(seance);
 presence getPresence();
 void postPresence(presence);
-personne getPersonne(char *,groupe);
+personne getPersonne(char *);
 void postPersonne(personne);
 groupe getGroupe(classe,char *);
 void postGroupe(groupe);
@@ -100,4 +101,4 @@ classe getClasse(char *);
 void postClasse(classe);
 cours getCours();
 void postCours(cours);
-void loadData(data);
+data loadData(char **);

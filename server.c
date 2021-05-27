@@ -7,21 +7,7 @@
 #include "libs/libs.h"
 #define PORT 8080
 
-void loadData(data data){
-    switch (data.typeData)
-    {
-        // emargement 
-    case 1:
-        printf("Bonjour %s %s",data.personne.nom, data.personne.prenom);
-        break;
 
-   /* case "":
-        break;*/
-    
-    default:
-        break;
-    }
-}
 
 int main(int argc, char const *argv[])
 {
@@ -30,7 +16,8 @@ int main(int argc, char const *argv[])
     int opt = 1;
     int addrlen = sizeof(address);
     char *buffer;
-    char *hello;
+    data d;
+    char *obj=malloc(sizeof(char)*2048);
     connection();
        
     // Creating socket file descriptor
@@ -69,16 +56,18 @@ int main(int argc, char const *argv[])
         //int pid = fork();
         
             //programme
-            classe c = getClasse("LA2");
-            groupe g= getGroupe(c,"TDB");
-            read(new_socket,buffer,sizeof(buffer));
-            personne p=getPersonne(buffer,g);
-            strcpy(hello,"Bonjour ");
+           // classe c = getClasse("LA2");
+           // groupe g= getGroupe(c,"TDB");
+            read(new_socket,buffer,2048*sizeof(char));
+            d = deserialize(buffer);
+            d.typeData=2;
+            obj = serialize(d);
+           /* strcpy(hello,"Bonjour ");
             strcat(hello,p.nom);
             strcat(hello," ");
             strcat(hello,p.prenom);
-            strcat(hello," et bienvenue sur la roll call tab\n");
-            write(new_socket , hello , strlen(hello));
+            strcat(hello," et bienvenue sur la roll call tab\n");*/
+            write(new_socket , obj , 2048*sizeof(char));
     
     
         
