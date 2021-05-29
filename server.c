@@ -13,6 +13,8 @@ int main(int argc, char const *argv[])
 {
     int server_fd, new_socket, valread;
     struct sockaddr_in address;
+    seance s;
+    presence p;
     int opt = 1;
     int addrlen = sizeof(address);
     char *buffer;
@@ -58,16 +60,14 @@ int main(int argc, char const *argv[])
             //programme
            // classe c = getClasse("LA2");
            // groupe g= getGroupe(c,"TDB");
-            read(new_socket,buffer,2048*sizeof(char));
-            d = deserialize(buffer);
-            d.typeData=2;
-            obj = serialize(d);
-           /* strcpy(hello,"Bonjour ");
-            strcat(hello,p.nom);
-            strcat(hello," ");
-            strcat(hello,p.prenom);
-            strcat(hello," et bienvenue sur la roll call tab\n");*/
-            write(new_socket , obj , 2048*sizeof(char));
+             read(new_socket,buffer,2048*sizeof(char));
+             d = deserialize(buffer);
+             p = ajouterPresence(d.personne);
+             s.listePresence[0] = p;
+             d.typeData=2;
+             obj = serialize(d);
+             write(new_socket , obj , 2048*sizeof(char));
+             afficherPresence(s);
     
     
         

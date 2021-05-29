@@ -101,4 +101,5 @@ classe getClasse(char *);
 void postClasse(classe);
 cours getCours();
 void postCours(cours);
+presence ajouterPresence(personne);
 data loadData(char **);

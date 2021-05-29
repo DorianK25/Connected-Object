@@ -246,6 +246,7 @@ data deserialize(char *obj){
     char * strToken =strtok(obj,";");
     champ = malloc(sizeof(char*) * 10);
     while ( strToken != NULL ) {
+        champ[i]=malloc(sizeof(char)*1024);
         champ[i]=strToken;
         // On demande le token suivant.
         strToken = strtok ( NULL, ";" );
@@ -260,20 +261,19 @@ data deserialize(char *obj){
     {
         // get personne by id
     case 1:
-            if(i==2){
+            
                 d.personne = getPersonne(champ[1]);
-            }
         break;
         //get personne
    case 2:
-            if(i==6){
+            
                 d.personne.idNFC = champ[1];
                 d.personne.idPersonne = atoi(champ[2]);
                 d.personne.isAdmin = atoi(champ[3]);
                 d.personne.nom = champ[4];
                 d.personne.prenom = champ[5];
                 //d.personne.groupe = getGroupeById(champ[6]);
-            }
+            
         break;
     
     default:
@@ -325,7 +325,13 @@ char *serialize(data d){
     return champ;
 }
 
-
+presence ajouterPresence(personne p){
+    char query[1024]="";
+    strcat(query,"INSERT INTO `classe` (`idClasse`, `nomClasse`) VALUES(NULL,'");
+    strcat(query,c.nom);
+    strcat(query,"')");
+    execQuery(query);
+}
 
 
 

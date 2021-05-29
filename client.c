@@ -13,8 +13,8 @@ int main(int argc, char const *argv[])
 {
 	int sock = 0, valread;
 	struct sockaddr_in serv_addr;
-	char *obj="cc";
-	char buffer[1024] = {0};
+	char *obj=malloc(sizeof(char)*2048);
+	char *buffer=malloc(sizeof(char)*2048);
 	data d;
 	//c.idCours =23;
 	if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
@@ -39,6 +39,7 @@ int main(int argc, char const *argv[])
 		return -1;
 	}
 	d.typeData=1;
+	d.personne.idNFC=malloc(sizeof(char)*1024);
 	d.personne.idNFC="AFC432";
 	obj=serialize(d);
 	write(sock, obj, 2048*sizeof(char));
