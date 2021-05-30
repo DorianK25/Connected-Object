@@ -122,36 +122,30 @@ groupe getGroupe(classe c,char* nom){
     return g;
 }
 
-personne getPersonne(int idNFC,groupe g){
+personne getPersonne(char * idNFC){
     personne p;
-    p.groupe=g;
     p.idNFC=idNFC;
-    char query[250]="SELECT EXISTS(SELECT * from personne WHERE idNFC=";
+    char query[250]="SELECT EXISTS(SELECT * from personne WHERE idNFC='";
     char id[20];
     char idG[20];
-    itoa(idNFC,id);
-    itoa(g.idGroupe,idG);
-    strcat(query,id);
-    strcat(query," AND idGroupe=");
-    strcat(query,idG);
-    strcat(query,")");
+    strcat(query,p.idNFC);
+    strcat(query,"')");
     execQuery(query);
     result = mysql_store_result(&mysql);
     int num_fields = mysql_num_fields(result);
     row = mysql_fetch_row(result);
     if(atoi(row[0])>0){
-        strcpy(query,"SELECT * from personne WHERE idNFC=");
-        strcat(query,id);
-        strcat(query," AND idGroupe=");
-        strcat(query,idG);
+        strcpy(query,"SELECT * from personne WHERE idNFC='");
+        strcat(query,p.idNFC);
+        strcat(query,"'");
         execQuery(query);
         result = mysql_store_result(&mysql);
-        int num_fields = mysql_num_fields(result);
         row = mysql_fetch_row(result);
         p.idPersonne=atoi(row[0]);
         p.nom=row[1];
         p.prenom=row[2];
         p.isAdmin=atoi(row[3]);
+        //p.groupe=getGroupeById()
     }else{
         p.idPersonne=-1;
         p.nom="Undefined";
@@ -227,8 +221,6 @@ void ajouterPersonne(personne p){
     itoa(p.groupe.idGroupe,idgroupe);
     char idAdmin[20];
     itoa(p.isAdmin,idAdmin);
-    char idNFC[20];
-    itoa(p.idNFC,idNFC);
     char query[1024]="";
     strcat(query,"INSERT INTO `personne` (`idPersonne`, `nomPersonne`, `prenomPersonne`, `isAdmin`, `idNFC`, `idGroupe`) VALUES(NULL,'");
     strcat(query,p.nom);
@@ -237,26 +229,126 @@ void ajouterPersonne(personne p){
     strcat(query,"',");
     strcat(query,idAdmin);
     strcat(query,",");
-    strcat(query,idNFC);
+    strcat(query,p.idNFC);
     strcat(query,",");
     strcat(query,idgroupe);
     strcat(query,")");
     execQuery(query);
 }
 
-int main(){
-    connection();
-   // afficherClasse();
-    classe c;
-    c=getClasse("LA2");
-    groupe g;
-    g=getGroupe(c,"TDB");
-    personne p;
-    p=getPersonne(1,g);
-   /* ajouterClasse(c);
+
+
+data deserialize(char *obj){
     
-    ajouterGroupe(g);
-    afficherGroupe(c);
-    ajouterPersonne(p);*/
-    printf("%s %s",p.nom,p.prenom);
+   char **champ;
+    int i=0;
+
+    char * strToken =strtok(obj,";");
+    champ = malloc(sizeof(char*) * 10);
+    while ( strToken != NULL ) {
+        champ[i]=malloc(sizeof(char)*1024);
+        champ[i]=strToken;
+        // On demande le token suivant.
+        strToken = strtok ( NULL, ";" );
+        i++;
+    }
+
+    data d;
+    d.typeData=atoi(champ[0]);
+
+
+    switch (d.typeData)
+    {
+        // get personne by id
+    case 1:
+            
+                d.personne = getPersonne(champ[1]);
+        break;
+        //get personne
+   case 2:
+            
+                d.personne.idNFC = champ[1];
+                d.personne.idPersonne = atoi(champ[2]);
+                d.personne.isAdmin = atoi(champ[3]);
+                d.personne.nom = champ[4];
+                d.personne.prenom = champ[5];
+                //d.personne.groupe = getGroupeById(champ[6]);
+            
+        break;
+    
+    default:
+        break;
+    }
+    
+    return d;
+
 }
+
+char *serialize(data d){
+    
+    char* champ;
+    champ = malloc(sizeof(char)*2048);
+    itoa(d.typeData,champ);
+    switch (d.typeData)
+    {
+        // get personne by id
+    case 1:
+        strcat(champ,";");
+        strcat(champ,d.personne.idNFC);
+        break;
+        //get personne
+   case 2:
+        strcat(champ,";");
+        strcat(champ,d.personne.idNFC);
+        strcat(champ,";");
+        char * idP;
+        itoa(d.personne.idPersonne,idP);
+        strcat(champ,idP);
+        strcat(champ,";");
+        char isAdmin[2];
+        itoa(d.personne.isAdmin,isAdmin);
+        strcat(champ,isAdmin);
+        strcat(champ,";");
+        strcat(champ,d.personne.nom);
+        strcat(champ,";");
+        strcat(champ,d.personne.prenom);
+        // strcat(champ,";");
+        // char * idG;
+        // itoa(d.personne.groupe.idGroupe,idG);
+        // strcat(champ,idG);
+        break;
+    
+    default:
+        break;
+    }
+
+    return champ;
+}
+
+presence ajouterPresence(personne p){
+    char query[1024]="";
+    strcat(query,"INSERT INTO `classe` (`idClasse`, `nomClasse`) VALUES(NULL,'");
+    strcat(query,c.nom);
+    strcat(query,"')");
+    execQuery(query);
+}
+
+
+
+
+// int main(){
+//     connection();
+//    // afficherClasse();
+//     classe c;
+//     c=getClasse("LA2");
+//     groupe g;
+//     g=getGroupe(c,"TDB");
+//     personne p;
+//     p=getPersonne(1,g);
+//    /* ajouterClasse(c);
+    
+//     ajouterGroupe(g);
+//     afficherGroupe(c);
+//     ajouterPersonne(p);*/
+//     printf("%s %s",p.nom,p.prenom);
+// }

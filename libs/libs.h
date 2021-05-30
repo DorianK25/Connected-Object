@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/socket.h>
+#include <arpa/inet.h>
+#include <unistd.h>
+#define PORT 8080
 #include "../bdd/bdd.h"
 
 typedef struct 
@@ -28,7 +32,7 @@ typedef struct
     char* nom;
     char* prenom;
     int isAdmin;//boolean
-    int idNFC;
+    char* idNFC;
     groupe groupe;
 }personne;
 
@@ -40,6 +44,8 @@ typedef struct
 
 typedef struct 
 {
+    cours cours;
+    time_t date;
     int idSeance;
     char* nom;
     groupe groupe;
@@ -62,6 +68,16 @@ typedef struct
     reponse bonneReponse;
 }question;
 
+typedef struct
+{
+    int typeData;
+    question question;
+    reponse reponse;
+    personne personne;
+}data;
+
+data deserialize(char *);
+char *serialize(data);
 void reverse(char s[]);
 void itoa(int n, char s[]);
 void afficherClasse();
@@ -77,11 +93,13 @@ seance getSeance();
 void postSeance(seance);
 presence getPresence();
 void postPresence(presence);
-personne getPersonne(int,groupe);
+personne getPersonne(char *);
 void postPersonne(personne);
 groupe getGroupe(classe,char *);
 void postGroupe(groupe);
 classe getClasse(char *);
-void postClasse(classe c);
+void postClasse(classe);
 cours getCours();
-void postCours(cours c);
+void postCours(cours);
+presence ajouterPresence(personne);
+data loadData(char **);
