@@ -14,6 +14,8 @@ int main(int argc, char const *argv[])
     int server_fd, new_socket, valread;
     struct sockaddr_in address;
     seance s;
+    s.idSeance=1;
+    s.nbPresences=0;
     presence p;
     int opt = 1;
     int addrlen = sizeof(address);
@@ -52,6 +54,8 @@ int main(int argc, char const *argv[])
         perror("listen");
         exit(EXIT_FAILURE);
     }
+
+        for(int i=0;i<atoi(argv[1]);i++){
         /* code */
             new_socket = accept(server_fd, (struct sockaddr *)&address, 
                        (socklen_t*)&addrlen);
@@ -62,11 +66,14 @@ int main(int argc, char const *argv[])
            // groupe g= getGroupe(c,"TDB");
              read(new_socket,buffer,2048*sizeof(char));
              d = deserialize(buffer);
-             p = ajouterPresence(d.personne);
-             s.listePresence[0] = p;
+             p = ajouterPresence(d.personne,s);
+             s.listePresence[s.nbPresences] = p;
+             s.nbPresences++;
              d.typeData=2;
              obj = serialize(d);
              write(new_socket , obj , 2048*sizeof(char));
+
+        }
              afficherPresence(s);
     
     

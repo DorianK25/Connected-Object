@@ -325,14 +325,79 @@ char *serialize(data d){
     return champ;
 }
 
-presence ajouterPresence(personne p){
-    char query[1024]="";
-    strcat(query,"INSERT INTO `classe` (`idClasse`, `nomClasse`) VALUES(NULL,'");
-    strcat(query,c.nom);
+void getPresence(personne p,seance s,presence *pres){
+    
+    char query[1024]="SELECT EXISTS(SELECT * from presence WHERE idPersonne='";
+    char idP[10];
+    char idS[10];
+    itoa(p.idPersonne,idP);
+    itoa(s.idSeance,idS);
+    strcat(query,idP);
+    strcat(query,"' AND idSeance='");
+    strcat(query,idS);
     strcat(query,"')");
+    printf("%s",query);
+    /*
     execQuery(query);
+    result = mysql_store_result(&mysql);
+    int num_fields = mysql_num_fields(result);
+    row = mysql_fetch_row(result);
+    if(atoi(row[0])>0){
+        strcpy(query,"SELECT * from presence WHERE idPersonne='");
+        strcat(query,idP);
+        strcat(query,"' AND idSeance='");
+        strcat(query,idS);
+        strcat(query,"'");
+        execQuery(query);
+        result = mysql_store_result(&mysql);
+        row = mysql_fetch_row(result);
+        pres->idPresence=atoi(row[0]);
+    }else{
+        pres->idPresence=-1;
+    }*/
 }
 
+
+presence ajouterPresence(personne p,seance s){
+
+    presence pres;
+    pres.personne=p;
+    char query[1024]="SELECT EXISTS(SELECT * from presence WHERE idPersonne='";
+    char idP[10];
+    char idS[10];
+    itoa(p.idPersonne,idP);
+    itoa(s.idSeance,idS);
+    strcat(query,idP);
+    strcat(query,"' AND idSeance='");
+    strcat(query,idS);
+    strcat(query,"')");
+   execQuery(query);
+    result = mysql_store_result(&mysql);
+    int num_fields = mysql_num_fields(result);
+    row = mysql_fetch_row(result);
+    if(atoi(row[0])!=0){
+        strcpy(query,"INSERT INTO `presence` (`idPersonne`, `idSeance`) VALUES('");
+        strcat(query,idP);
+        strcat(query,"','");
+        strcat(query,idS);
+        strcat(query,"')");
+        execQuery(query);
+    }
+
+
+    return pres;
+
+}
+
+void afficherPresence(seance s){
+    int i = 0;
+    system("clear");
+    printf("Liste des présents : \n\n");
+    for(i=0;i<s.nbPresences;i++){
+        printf("\t\t %s %s\n\n",s.listePresence[i].personne.nom,s.listePresence[i].personne.prenom);
+    }
+
+}
 
 
 

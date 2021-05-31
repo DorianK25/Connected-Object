@@ -49,7 +49,8 @@ typedef struct
     int idSeance;
     char* nom;
     groupe groupe;
-    presence listePresence[];
+    presence listePresence[50];
+    int nbPresences;
 }seance;
 
 typedef struct 
@@ -91,7 +92,6 @@ reponse getReponse();
 void postReponse(reponse);
 seance getSeance();
 void postSeance(seance);
-presence getPresence();
 void postPresence(presence);
 personne getPersonne(char *);
 void postPersonne(personne);
@@ -101,5 +101,7 @@ classe getClasse(char *);
 void postClasse(classe);
 cours getCours();
 void postCours(cours);
-presence ajouterPresence(personne);
+presence ajouterPresence(personne,seance);
+void getPresence(personne ,seance ,presence *);
+void afficherPresence(seance);
 data loadData(char **);
