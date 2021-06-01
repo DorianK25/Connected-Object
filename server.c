@@ -11,6 +11,11 @@
 
 int main(int argc, char const *argv[])
 {
+    if(argc != 2){
+        printf("\n\n ./script.sh <nb_de_connecion> \n\n");
+        return -1;
+    }
+
     int server_fd, new_socket, valread;
     struct sockaddr_in address;
     seance s;
