@@ -1,17 +1,17 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.3
+-- version 4.9.7
 -- https://www.phpmyadmin.net/
 --
--- Hôte : localhost:8889
--- Généré le :  mar. 30 mars 2021 à 14:18
--- Version du serveur :  5.7.26
--- Version de PHP :  7.4.2
+-- Hôte : localhost:3306
+-- Généré le : mar. 01 juin 2021 à 15:35
+-- Version du serveur :  5.7.32
+-- Version de PHP : 7.4.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 --
--- Base de données :  `roll_call_tab`
+-- Base de données : `roll_call_tab`
 --
 
 -- --------------------------------------------------------
@@ -75,7 +75,7 @@ CREATE TABLE `personne` (
   `nomPersonne` char(150) NOT NULL,
   `prenomPersonne` char(150) NOT NULL,
   `isAdmin` int(11) NOT NULL,
-  `idNFC` int(11) NOT NULL,
+  `idNFC` varchar(100) NOT NULL,
   `idGroupe` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -84,7 +84,7 @@ CREATE TABLE `personne` (
 --
 
 INSERT INTO `personne` (`idPersonne`, `nomPersonne`, `prenomPersonne`, `isAdmin`, `idNFC`, `idGroupe`) VALUES
-(2, 'Branlant', 'Theodorine', 0, 1, 1);
+(1, 'Branlant', 'Theodorine', 1, 'AFC432', 1);
 
 -- --------------------------------------------------------
 
@@ -97,6 +97,46 @@ CREATE TABLE `presence` (
   `idPersonne` int(11) NOT NULL,
   `idSeance` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `presence`
+--
+
+INSERT INTO `presence` (`idPresence`, `idPersonne`, `idSeance`) VALUES
+(1, 1, 290156224),
+(6, 1, 1),
+(7, 1, 1),
+(8, 1, 1),
+(9, 1, 1),
+(10, 1, 1),
+(11, 1, 1),
+(12, 1, 1),
+(13, 1, 1),
+(14, 1, 1),
+(15, 1, 1),
+(16, 1, 1),
+(17, 1, 1),
+(18, 1, 1),
+(19, 1, 1),
+(20, 1, 1),
+(21, 1, 1),
+(22, 1, 1),
+(23, 1, 1),
+(24, 1, 1),
+(25, 1, 1),
+(26, 1, 1),
+(27, 1, 1),
+(28, 1, 1),
+(29, 1, 1),
+(30, 1, 1),
+(31, 1, 1),
+(32, 1, 1),
+(33, 1, 1),
+(34, 1, 1),
+(35, 1, 1),
+(36, 1, 1),
+(37, 1, 1),
+(38, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -135,6 +175,13 @@ CREATE TABLE `seance` (
   `idGroupe` int(11) NOT NULL,
   `dateSeance` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `seance`
+--
+
+INSERT INTO `seance` (`idSeance`, `idCours`, `idGroupe`, `dateSeance`) VALUES
+(1, 1, 1, '2021-05-30');
 
 --
 -- Index pour les tables déchargées
@@ -199,7 +246,7 @@ ALTER TABLE `seance`
 -- AUTO_INCREMENT pour la table `classe`
 --
 ALTER TABLE `classe`
-  MODIFY `idClasse` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `idClasse` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT pour la table `cours`
@@ -211,19 +258,19 @@ ALTER TABLE `cours`
 -- AUTO_INCREMENT pour la table `groupe`
 --
 ALTER TABLE `groupe`
-  MODIFY `idGroupe` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idGroupe` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT pour la table `personne`
 --
 ALTER TABLE `personne`
-  MODIFY `idPersonne` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idPersonne` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT pour la table `presence`
 --
 ALTER TABLE `presence`
-  MODIFY `idPresence` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idPresence` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT pour la table `question`
@@ -241,4 +288,4 @@ ALTER TABLE `reponse`
 -- AUTO_INCREMENT pour la table `seance`
 --
 ALTER TABLE `seance`
-  MODIFY `idSeance` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idSeance` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
