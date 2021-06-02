@@ -42,8 +42,8 @@ int main(int argc, char const *argv[])
 	d.personne.idNFC=malloc(sizeof(char)*1024);
 	d.personne.idNFC="AFC432";
 	obj=serialize(d);
-	write(sock, obj, 2048*sizeof(char));
-	read(sock,buffer,2048*sizeof(char));
+	write(sock, obj, sizeof(obj)*1024);
+	read(sock,buffer,sizeof(buffer)*1024);
 	d=deserialize(buffer);
 	printf("Bonjour %s %s \n",d.personne.prenom,d.personne.nom);
 	return 0;
