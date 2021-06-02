@@ -248,6 +248,7 @@ data deserialize(char *obj){
     while ( strToken != NULL ) {
         champ[i]=malloc(sizeof(char)*1024);
         champ[i]=strToken;
+        //printf("%s",obj);
         // On demande le token suivant.
         strToken = strtok ( NULL, ";" );
         i++;
@@ -255,13 +256,13 @@ data deserialize(char *obj){
 
     data d;
     d.typeData=atoi(champ[0]);
-
-
+    
+    
     switch (d.typeData)
     {
         // get personne by id
     case 1:
-            
+                
                 d.personne = getPersonne(champ[1]);
         break;
         //get personne
@@ -288,6 +289,8 @@ char *serialize(data d){
     
     char* champ;
     champ = malloc(sizeof(char)*2048);
+    char * idP;
+    idP = malloc(sizeof(char)*2048);
     itoa(d.typeData,champ);
     switch (d.typeData)
     {
@@ -296,12 +299,12 @@ char *serialize(data d){
         strcat(champ,";");
         strcat(champ,d.personne.idNFC);
         break;
+        
         //get personne
    case 2:
         strcat(champ,";");
         strcat(champ,d.personne.idNFC);
         strcat(champ,";");
-        char * idP;
         itoa(d.personne.idPersonne,idP);
         strcat(champ,idP);
         strcat(champ,";");
@@ -336,8 +339,7 @@ void getPresence(personne p,seance s,presence *pres){
     strcat(query,"' AND idSeance='");
     strcat(query,idS);
     strcat(query,"')");
-    printf("%s",query);
-    /*
+    
     execQuery(query);
     result = mysql_store_result(&mysql);
     int num_fields = mysql_num_fields(result);
@@ -354,7 +356,7 @@ void getPresence(personne p,seance s,presence *pres){
         pres->idPresence=atoi(row[0]);
     }else{
         pres->idPresence=-1;
-    }*/
+    }
 }
 
 
@@ -375,7 +377,7 @@ presence ajouterPresence(personne p,seance s){
     result = mysql_store_result(&mysql);
     int num_fields = mysql_num_fields(result);
     row = mysql_fetch_row(result);
-    if(atoi(row[0])!=0){
+    if(atoi(row[0])==0){
         strcpy(query,"INSERT INTO `presence` (`idPersonne`, `idSeance`) VALUES('");
         strcat(query,idP);
         strcat(query,"','");
