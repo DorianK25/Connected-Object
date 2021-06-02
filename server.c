@@ -24,7 +24,7 @@ int main(int argc, char const *argv[])
     presence p;
     int opt = 1;
     int addrlen = sizeof(address);
-    char *buffer;
+    char *buffer=malloc(sizeof(char)*2048);
     data d;
     char *obj=malloc(sizeof(char)*2048);
     connection();
@@ -69,14 +69,14 @@ int main(int argc, char const *argv[])
             //programme
            // classe c = getClasse("LA2");
            // groupe g= getGroupe(c,"TDB");
-             read(new_socket,buffer,2048*sizeof(char));
+             read(new_socket,buffer,sizeof(buffer)*1024);
              d = deserialize(buffer);
              p = ajouterPresence(d.personne,s);
              s.listePresence[s.nbPresences] = p;
              s.nbPresences++;
              d.typeData=2;
              obj = serialize(d);
-             write(new_socket , obj , 2048*sizeof(char));
+             write(new_socket , obj , sizeof(obj)*1024);
 
         }
              afficherPresence(s);
